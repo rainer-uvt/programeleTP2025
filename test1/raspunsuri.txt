@@ -1,0 +1,28 @@
+1.)
+algoritmii se incadrau in urmatoarele clase de complexitate
+	O(n) - cautare liniara SI Fibonacci SI exemplu particular care nu e n^2 (laborator sapt 2 (findGreatestDecreasing))
+	O(log(n)) - cautare binara pe vector sortat
+	O(n^2) - insertionsort SI bubblesort
+
+2.) dat fiind vectorul initial v[3]={a,b,c} toti trebuiau sa afiseze (a+2), b
+	d indica initial catre ultimul element al vectorului, d[2] ~ d+2
+	d indica catre penultimul element (v[1]) dupa executarea instructiunii "d--;"
+	setam valoarea lui "d-1" ~ "v[1-1]" ~ "v[0]" la 2 plus valoarea lui "d"
+	afisam v[0] (proaspat setat) si valoarea lui d
+
+3.) vezi exemple
+
+4.) in functie de care paramentru din Swap se transmite prin referinta (a, b sau nicicare), doar valoarea acestuia poate fi schimbata
+
+5.) 
+int getHammingDistance(int a, int b){
+	a^=b;
+	b=0;
+	while(a){
+		b++;
+		a&=a-1;
+	}
+	return b;
+}
+
+6.) vezi exemple
