@@ -64,8 +64,6 @@ class Solution {
         }
         int ret=0;
         for(int i=0;i<primeCount;i++){
-            if(z==3){
-            }
             if(x%primes[i]==0){
                 ret++;
                 while(x%primes[i]==0){
