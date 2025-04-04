@@ -4,6 +4,16 @@
 //contul e gratis si nu strica la nimic
 
 
+//cele 2 asa zise optimizari ar fi
+//1.) un fel de apel recursiv al functiei gps
+//daca vreau sa calculez gps(36) eu voi calcula implicit si gps(9) (dupa impartirea la 2 de 2 ori)
+//poate valoarea era deja calculata, poate va trebui sa o calculez
+//nu pare ca a fost o optimizare foarte buna
+//2.) in loc sa calculez tot timpul acele scoruri gps, ele pot fi cumva calculate la selectarea numerelor prime
+//creste putin complexitatea acolo, dar e o functie pe care o apelam o singura data
+//dupa aceea gps(x) e calculat in O(1)
+
+
 class Solution {
 
     static bool done;
@@ -13,20 +23,27 @@ class Solution {
     static int numberScores[100010];
     
     static void doo(){
-        memset(numberScores,0xFF,100010*sizeof(int));
+        memset(numberScores,0,100010*sizeof(int));
+        for(int i=2;i<=100000;i+=2){
+            numberScores[i]=1;
+        }
         primes[0]=2;
         primeCount=1;
-        for(int i=3;i<46348;i+=2){
+        for(int i=3;i<3200;i+=2){
             if(isPrime[i]==false){
                 primes[primeCount++]=i;
-                for(int j=i*i;j<100000;j+=(i<<1)){
+                for(int j=i;j<=100000;j+=i){
+                    numberScores[j]++;
                     isPrime[j]=true;
                 }
             }
         }
-        for(int i=46349;i<100000;i+=2){
+        for(int i=3201;i<100000;i+=2){
              if(isPrime[i]==false){
                 primes[primeCount++]=i;
+                for(int j=i;j<=100000;j+=i){
+                    numberScores[j]++;
+                }
             }
         }
     }
@@ -53,6 +70,32 @@ class Solution {
         }
     };
 
+
+    int gps(int x, int sp){
+        if(x==1){
+            return 0;
+        }
+        int z=x, y=numberScores[x];
+        if(y>0){
+            return y;
+        }
+        for(int i=sp;i<primeCount;i++){
+            if(x%primes[i]==0){
+                while(x%primes[i]==0){
+                    x/=primes[i];
+                }
+                int h=gps(x,i+1);
+                numberScores[z]=h+1;
+                return h+1;
+            }
+            if(primes[i]*primes[i]>x){
+                numberScores[x]=1;
+                return 1;
+            }
+        }
+        return 0;
+    }
+
     int gps(int x){
         int z=x;
         if(x==1){
@@ -69,12 +112,9 @@ class Solution {
                 while(x%primes[i]==0){
                     x/=primes[i];
                 }
-            }
-            if(x==1){
-                numberScores[z]=ret;
-                return ret;
-            }
-            if(z==3){
+                int h=gps(x,i+1);
+                numberScores[z]=h+1;
+                return h+1;
             }
             if(primes[i]*primes[i]>x){
                 numberScores[z]=ret+1;
@@ -89,11 +129,11 @@ void processList(vector<int>& nums, priority_queue<su>& pq, int k){
     int l=nums.size();
     vector<pair<int,pair<int,int>>> v(l);
     stack<pair<int,int>> st;
-    v[0].first=gps(nums[0]);
+    v[0].first=numberScores[nums[0]];
     v[0].second.first=0;
     st.push({v[0].first,0});
     for(int i=1;i<l;i++){
-        int x=gps(nums[i]);
+        int x=numberScores[nums[i]];
         v[i].first=x;
         pair<int,int> p{x,i};
         while(!st.empty() && st.top().first<x){
