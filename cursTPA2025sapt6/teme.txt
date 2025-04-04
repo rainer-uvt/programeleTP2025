@@ -1,0 +1,11 @@
+ciurul lui Eratostene
+factorizare matrice
+longest common subsequence
+subsir maximal crescator
+
+
+itec:
+	transformationCost
+	functie ciudata
+
+pb leetcode
