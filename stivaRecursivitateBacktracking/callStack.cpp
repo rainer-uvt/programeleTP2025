@@ -12,7 +12,7 @@ int fibo(int n, int callFrom, int nivel){
 		return n;
 	}
 	int x=fibo(n-1,n,nivel+1)+fibo(n-2,n,nivel+1);
-	cout<<n<<" "<<callFrom<<" "<<nivel<<" "<<&x<<"\n";
+	cout<<n<<" "<<callFrom<<" "<<nivel<<" "<<&x<<" "<<&n<<"\n";
 	return x;
 }
 

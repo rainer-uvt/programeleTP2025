@@ -45,6 +45,28 @@ void permutari1(int* stiva, int n, int poz, void* fctAfisare(int*, int)){
 	}
 }
 
+void problemaDamelor(int* stiva, int n, int poz){
+	if(n==poz){
+		afisareTureSiDame(stiva, n);
+		return;
+	}
+	for(int i=1;i<=n;i++){
+		bool ok=true;
+		for(int j=0;j<poz;j++){
+			if(stiva[j]==i){
+				ok=false; j=poz;
+			}
+			if(abs(i-stiva[j])==poz-j){
+				ok=false; j=poz;
+			}
+		}
+		if(ok){
+			stiva[poz]=i;
+			problemaDamelor(stiva, n, poz+1);
+		}
+	}
+}
+
 void permutari2(int* stiva, int n, int poz, bool* used, void* fctAfisare(int*, int)){
 	if(poz==n){
 		fctAfisare(stiva,n);
@@ -132,6 +154,11 @@ int main(){
 	bool used[11];
 	void *af1=afisare, *af2=afisareTureSiDame;
 	memset(used, 0, 10*sizeof(bool));
+
+
+	problemaDamelor(stiva, 8, 0);
+	return 0;
+
 	//permutari de 5
 	printf("perm1\n");
 	permutari1(stiva, 5, 0, af1);

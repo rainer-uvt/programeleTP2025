@@ -1,11 +1,13 @@
-ciurul lui Eratostene
-factorizare matrice
-longest common subsequence
+ciurul lui Eratostene 				done
+factorizare matrice					done
+longest common subsequence			done
 subsir maximal crescator
 
 
 itec:
-	transformationCost
-	functie ciudata
+	transformationCost				done
+	functie ciudata					done
 
 pb leetcode
+
+STL + fiecare problema are dinamica ei
